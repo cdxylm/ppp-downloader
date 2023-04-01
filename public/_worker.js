@@ -4,9 +4,7 @@ import * as Realm from 'realm-web';
 export default {
     async fetch(request, env) {
         let requestUrl = new URL(request.url)
-        console.log(requestUrl)
-        if(requestUrl.pathname.startsWith('/api/')){
-            console.log(requestUrl)
+        if (requestUrl.pathname.startsWith('/api/search')) {
             let name = requestUrl.searchParams.get("query")
             // TODO: 根据更多的params 生成更多的查询表达式 eg:指定industry的情况下，给予industry更高的权重
             if (name === null || name.length === 0) {
@@ -96,12 +94,19 @@ export default {
                     },
                 })
             } catch (err) {
-                return new Response(JSON.stringify(err), {
+                return new Response(JSON.stringify({error: "Remote query failed"}), {
                     headers: {
                         "content-type": "application/json;charset=UTF-8",
                     },
                 })
             }
+        }
+        if (requestUrl.pathname.startsWith('/api/files')) {
+            const base = "https://www.cpppc.org:8082";
+            const statusCode = 301;
+            const newPath = requestUrl.pathname.replace("/api/files", "/api/pub/project")
+            const destinationURL = new URL(newPath, base)
+            return Response.redirect(destinationURL, statusCode);
         }
         return env.ASSETS.fetch(request);
     },

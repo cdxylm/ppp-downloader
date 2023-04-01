@@ -31,7 +31,7 @@ function App() {
                     return newArray
                 }
             )
-            const response = await fetch(`files/${stage}-detail/${projectId}`)
+            const response = await fetch(`api/files/${stage}-detail/${projectId}`)
             setLoading(prevState => {
                 return prevState.filter((element) => element !== "stage")
             })
@@ -156,6 +156,10 @@ function App() {
                         <Loading loading={loading.includes("search")}/>
                         <div className="flex justify-center w-full">
                             <ul>
+                                {results.length === 0 && query !== "" && (
+                                    <li className="w-full p-4 hover:rounded-lg">
+                                        <div>没有查询到相关项目</div>
+                                    </li>)}
                                 {results.map((result) => (
                                     <li key={`key-${result.id}`}
                                         className="w-full p-4 hover:rounded-lg hover:bg-primary-100 hover:text-primary-600">

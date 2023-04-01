@@ -7,15 +7,15 @@ export default defineConfig({
     server: {
         port: '5173',
         proxy: {
-            '/api': {
+            '/api/search': {
                 target: 'http://127.0.0.1:5174/',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, '') // 不可以省略rewrite
             },
-            '/files': {
+            '/api/files': {
                 target: 'https://www.cpppc.org:8082/api/pub/project/',
                 changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/files/, ''), // 不可以省略rewrite
+                rewrite: (path) => path.replace(/^\/api\/files/, ''), // 不可以省略rewrite
                 configure: (proxy) => {
                     proxy.on('proxyReq', (proxyReq, req, res) => {
                         proxyReq.setHeader('referer', `http://www.cpppc.org:8082/inforpublic/homepage.html`)
