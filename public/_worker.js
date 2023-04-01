@@ -18,18 +18,17 @@ export default {
             request = new Request(dest, request);
             request.headers.set("Origin", new URL(dest).origin);
             let response = await fetch(request);
-            return new Response(JSON.stringify(request))
-            // // Recreate the response so you can modify the headers
-            //
-            // response = new Response(response.body, response);
-            // // Set CORS headers
-            //
-            // response.headers.set("Access-Control-Allow-Origin", url.origin);
-            //
-            // // Append to/Add Vary header so browser will cache response correctly
-            // response.headers.append("Vary", "Origin");
-            //
-            // return response;
+            // Recreate the response so you can modify the headers
+
+            response = new Response(response.body, response);
+            // Set CORS headers
+
+            response.headers.set("Access-Control-Allow-Origin", url.origin);
+
+            // Append to/Add Vary header so browser will cache response correctly
+            response.headers.append("Vary", "Origin");
+
+            return response;
         }
 
         async function handleOptions(request) {
