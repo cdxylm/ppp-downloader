@@ -19,9 +19,9 @@ function App() {
         setOffcanvas(myOffcanvas)
     }, []);
 
-    useEffect(() => {
-        console.log(files);
-    }, [files]);
+    // useEffect(() => {
+    //     console.log(files);
+    // }, [files]);
 
     const updateStageFiles = (projectId, stage, newProject = false) => {
         const getStageInfo = async (projectId, stage) => {
