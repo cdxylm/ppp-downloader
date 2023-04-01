@@ -101,8 +101,14 @@ function App() {
         // console.log(loading)
         // TODO:当请求出错时提示
         const response = await fetch(`api/search?query=${query}`);
+        // const response = await fetch(`https://ppp-downloader-worker.aguo.workers.dev?query=${query}`);
         const data = await response.json();
-        setResults(data);
+        // TODO:error
+        if (data.hasOwnProperty("error")) {
+            setResults([])
+        } else {
+            setResults(data);
+        }
         setLoading(prevState => {
             return prevState.filter((element) => element !== "search")
         })
@@ -174,7 +180,7 @@ function App() {
                     </h5>
                     <button type="button"
                             className="box-content rounded-none border-none opacity-50 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                            data-te-offcanvas-dismiss>
+                            data-te-offcanvas-dismiss={true}>
                             <span
                                 className="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
