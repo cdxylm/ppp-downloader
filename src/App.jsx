@@ -31,7 +31,7 @@ function App() {
                     return newArray
                 }
             )
-            const response = await fetch(`api/files/${stage}-detail/${projectId}`)
+            const response = await fetch(`api/files?stage=${stage}-detail&project=${projectId}`)
             setLoading(prevState => {
                 return prevState.filter((element) => element !== "stage")
             })
