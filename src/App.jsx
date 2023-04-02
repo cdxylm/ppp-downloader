@@ -38,20 +38,18 @@ function App() {
             return response.json()
         }
 
-        const extractFiles = (json, attr) => {
+        const extractFiles = (json) => {
             let result = [];
 
             const traverse = (obj) => {
                 for (let key in obj) {
-                    if (typeof obj[key] === "object" && obj[key] !== null) {
-                        traverse(obj[key]);
-                    } else {
-                        if (key === attr) {
+                    if (Array.isArray(obj[key])) {
+                        for (let i = 0; i < obj[key].length; i++) {
                             result.push({
-                                "fileId": obj[key],
-                                "fileName": obj["fileName"],
-                                "uploadTime": obj["uploadTime"]
-                            });
+                                "fileId": obj[key][i][1],
+                                "fileName": obj[key][i][0],
+                                "uploadTime": obj[key][i][2]
+                            })
                         }
                     }
                 }
@@ -65,7 +63,7 @@ function App() {
 
         const info = getStageInfo(projectId, stage)
         info.then(info => {
-            currentFiles[stage] = extractFiles(info, "fileId")
+            currentFiles[stage] = extractFiles(info)
             setFiles(currentFiles)
         })
     }
