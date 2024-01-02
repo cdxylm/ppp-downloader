@@ -145,7 +145,7 @@ function App() {
                                 <input
                                     type="search"
                                     className="shadow-np-input h-14 relative m-0 block w-[1%] min-w-0 flex-auto rounded-[0.8rem] px-3 py-1.5 text-base font-normal text-neutral-700 outline-none border-2"
-                                    placeholder="Search"
+                                    placeholder="输入关键词 回车检索"
                                     aria-label="Search"
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}/>
